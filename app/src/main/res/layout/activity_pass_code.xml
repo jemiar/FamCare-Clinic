@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".PassCode">
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:background="@color/barColor"
+        android:textColor="@color/white"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="25dp"
+        android:text="@string/passcode_title" />
+
+    <EditText
+        android:id="@+id/passcode_enter"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="10dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/barColor"
+        android:layout_marginHorizontal="100dp"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:ems="10"
+        android:textColor="@color/black"
+        android:inputType="numberPassword" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1"
+            android:background="@drawable/roundedrec"
+            android:backgroundTint="@color/white"
+            android:paddingHorizontal="20dp"
+            android:text="Cancel"
+            android:textColor="@color/gray" />
+
+        <Button
+            android:id="@+id/signin_button"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="20dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/roundedrec"
+            android:backgroundTint="@color/barColor"
+            android:textColor="@color/white"
+            android:text="Sign in" />
+    </RelativeLayout>
+</LinearLayout>

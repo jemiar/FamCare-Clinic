@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ClinicApp</string>
+    <string name="clinician_list">Clinicians in this shift:</string>
+    <string name="passcode_title">Please enter your 4 digit passcode</string>
+    <string name="vital_button">UPDATE VITALS</string>
+    <string name="note_button">WRITE NOTE</string>
+    <string name="msg_button">SEND MESSAGE</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
 </resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="12dp"
+    android:layout_marginBottom="1dp"
+    android:background="@color/backgroundColor">
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/low_button"
+        android:layout_width="90dp"
+        android:layout_height="36dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="260dp"
+        android:background="@drawable/roundedrec"
+        android:backgroundTint="@color/white"
+        android:textSize="10sp"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/normal_button"
+        android:layout_width="90dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="380dp"
+        android:background="@drawable/roundedrec"
+        android:backgroundTint="@color/white"
+        android:textSize="10sp"
+        android:layout_centerVertical="true"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/hi_button"
+        android:layout_width="90dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="500dp"
+        android:background="@drawable/roundedrec"
+        android:backgroundTint="@color/white"
+        android:textSize="10sp"
+        android:layout_centerVertical="true"
+        android:text="Button" />
+</RelativeLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PatientMain">
+
+    <include layout="@layout/top_bar" />
+
+    <TextView
+        android:id="@+id/patientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:textStyle="bold"
+        android:layout_below="@id/topBar"
+        android:textAlignment="center"
+        android:textSize="50sp"
+        android:text="Charlie S" />
+
+    <TextView
+        android:id="@+id/lastUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/patientName"
+        android:textAlignment="center"
+        android:text="Last update on 9/15/2018 09:30PM" />
+
+    <Button
+        android:id="@+id/vitalButton"
+        android:layout_width="400dp"
+        android:layout_height="85dp"
+        android:layout_below="@id/lastUpdate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="85dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@drawable/roundedrec"
+        android:backgroundTint="@color/btnColor"
+        android:text="@string/vital_button" />
+
+    <Button
+        android:id="@+id/noteButton"
+        android:layout_width="400dp"
+        android:layout_height="85dp"
+        android:layout_below="@id/vitalButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@drawable/roundedrec"
+        android:backgroundTint="@color/btnColor"
+        android:text="@string/note_button" />
+
+    <Button
+        android:id="@+id/msgButton"
+        android:layout_width="400dp"
+        android:layout_height="85dp"
+        android:layout_below="@id/noteButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@drawable/roundedrec"
+        android:backgroundTint="@color/btnColor"
+        android:text="@string/msg_button" />
+
+
+</RelativeLayout>

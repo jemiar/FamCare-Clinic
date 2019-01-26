@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdateVitals">
+
+    <include layout="@layout/top_bar" />
+
+    <TextView
+        android:id="@+id/sexNAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBar"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:text="Male, 72" />
+
+    <TextView
+        android:id="@+id/patName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sexNAge"
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textColor="@color/barColor"
+        android:text="Charlie Smith" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/summary"
+        android:layout_below="@id/patName"
+        android:layout_marginTop="15dp"
+        android:paddingVertical="10dp"
+        android:background="@color/barColor">
+
+        <TextView
+            android:id="@+id/sum_HR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginLeft="35dp"
+            android:text="HR" />
+
+        <TextView
+            android:id="@+id/sum_BT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/sum_HR"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginLeft="110dp"
+            android:text="BT" />
+
+        <TextView
+            android:id="@+id/sum_BP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="BP" />
+
+        <TextView
+            android:id="@+id/sum_BO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/sum_BP"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginLeft="110dp"
+            android:text="BO" />
+
+        <TextView
+            android:id="@+id/sum_RR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginRight="35dp"
+            android:text="RR" />
+
+        <TextView
+            android:id="@+id/hr_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sum_HR"
+            android:layout_marginLeft="25dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:text="NORMAL" />
+
+        <TextView
+            android:id="@+id/bt_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sum_BT"
+            android:textColor="@color/white"
+            android:layout_marginLeft="155dp"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:text="NORMAL" />
+
+        <TextView
+            android:id="@+id/bp_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sum_BP"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:text="NORMAL" />
+
+        <TextView
+            android:id="@+id/bo_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sum_BO"
+            android:layout_marginLeft="415dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:text="NORMAL" />
+
+        <TextView
+            android:id="@+id/rr_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sum_RR"
+            android:layout_marginLeft="540dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:text="NORMAL" />
+
+        <TextView
+            android:id="@+id/day_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sum_HR"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:text="August 27, 2018" />
+
+        <TextView
+            android:id="@+id/goal_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/day_month"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Patient Goal" />
+
+        <Button
+            android:id="@+id/edit_goal_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@id/day_month"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/roundedrec"
+            android:backgroundTint="@color/white"
+            android:text="Edit Goal"
+            android:textColor="@color/barColor" />
+
+        <TextView
+            android:id="@+id/goal_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/goal_label"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:text="@string/lorem" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/input_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/submitBtn"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/summary" />
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="110dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/roundedrec"
+        android:backgroundTint="@color/btnColor"
+        android:text="submit"
+        android:textSize="20sp"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
