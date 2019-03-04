@@ -18,6 +18,7 @@ import java.util.List;
 public class VitalAdapter extends RecyclerView.Adapter<VitalAdapter.VitalViewHolder> {
 
     private List<Vital_Item> dataSet;
+    private List<String> responses;
     private Context context;
 
     public static class VitalViewHolder extends RecyclerView.ViewHolder {
@@ -37,11 +38,21 @@ public class VitalAdapter extends RecyclerView.Adapter<VitalAdapter.VitalViewHol
 
     public VitalAdapter(Context c) {
         dataSet = new ArrayList<>();
+        responses = new ArrayList<>();
         context = c;
+    }
+
+    public List<String> getResponses() {
+        return responses;
     }
 
     public void addItem(Vital_Item i) {
         dataSet.add(i);
+        responses.add("NOVALUE");
+    }
+
+    public List<Vital_Item> getDataSet() {
+        return dataSet;
     }
 
     @Override
@@ -63,7 +74,7 @@ public class VitalAdapter extends RecyclerView.Adapter<VitalAdapter.VitalViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VitalViewHolder vitalViewHolder, int i) {
+    public void onBindViewHolder(@NonNull VitalViewHolder vitalViewHolder, final int i) {
         Vital_Item item = dataSet.get(i);
         vitalViewHolder.label.setText(item.getLabel());
         final Button low_btn = vitalViewHolder.low_button;
@@ -79,6 +90,9 @@ public class VitalAdapter extends RecyclerView.Adapter<VitalAdapter.VitalViewHol
                 norm_btn.setTextColor(context.getResources().getColor(R.color.black));
                 ViewCompat.setBackgroundTintList(hi_btn, AppCompatResources.getColorStateList(context, R.color.white));
                 hi_btn.setTextColor(context.getResources().getColor(R.color.black));
+
+                responses.remove(i);
+                responses.add(i, low_btn.getText().toString());
             }
         });
         norm_btn.setText(item.getNormal_btn_txt());
@@ -91,6 +105,9 @@ public class VitalAdapter extends RecyclerView.Adapter<VitalAdapter.VitalViewHol
                 low_btn.setTextColor(context.getResources().getColor(R.color.black));
                 ViewCompat.setBackgroundTintList(hi_btn, AppCompatResources.getColorStateList(context, R.color.white));
                 hi_btn.setTextColor(context.getResources().getColor(R.color.black));
+
+                responses.remove(i);
+                responses.add(i, norm_btn.getText().toString());
             }
         });
         if(item.get_btn_no()) {
@@ -113,6 +130,9 @@ public class VitalAdapter extends RecyclerView.Adapter<VitalAdapter.VitalViewHol
                 norm_btn.setTextColor(context.getResources().getColor(R.color.black));
                 ViewCompat.setBackgroundTintList(low_btn, AppCompatResources.getColorStateList(context, R.color.white));
                 low_btn.setTextColor(context.getResources().getColor(R.color.black));
+
+                responses.remove(i);
+                responses.add(i, hi_btn.getText().toString());
             }
         });
     }

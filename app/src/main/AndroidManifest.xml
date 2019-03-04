@@ -27,6 +27,17 @@
         <activity
             android:name=".UpdateVitals"
             android:theme="@style/FamCareTheme" />
+        <activity
+            android:name=".Review"
+            android:theme="@style/FamCareDialog" />
+        <activity android:name=".SendMessages" />
+        <activity android:name=".WriteNote" />
+        <activity
+            android:name=".Warning"
+            android:theme="@style/FamCareDialog" />
+        <activity
+            android:name=".SetGoal"
+            android:theme="@style/FamCareDialog" />
     </application>
 
 </manifest>

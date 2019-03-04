@@ -1,6 +1,8 @@
 package com.project.hoangminh.clinicapp;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -12,9 +14,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import static android.graphics.Typeface.BOLD;
 
 public class PatientMain extends AppCompatActivity {
+
+    private FirebaseDatabase famCareDB;
+    private DatabaseReference dbRef;
+    private ChildEventListener timeListener;
+    private TextView timeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +57,57 @@ public class PatientMain extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button msgBtn = findViewById(R.id.msgButton);
+        msgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PatientMain.this, SendMessages.class);
+                startActivity(intent);
+            }
+        });
+
+        Button noteBtn = findViewById(R.id.noteButton);
+        noteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PatientMain.this, WriteNote.class);
+                startActivity(intent);
+            }
+        });
+
+        timeView = findViewById(R.id.lastUpdate);
+
+        famCareDB = FirebaseDatabase.getInstance();
+        dbRef = famCareDB.getReference().child("time");
+        timeListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String t = dataSnapshot.getValue(String.class);
+                timeView.setText("Last updated on " + t);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        dbRef.addChildEventListener(timeListener);
     }
 
     @Override

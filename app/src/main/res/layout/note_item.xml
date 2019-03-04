@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/noteTime"
+        android:text="Oct 1, 2018 9:00 AM"
+        android:textColor="@color/white"
+        android:paddingVertical="5dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:background="@color/barColor"/>
+
+    <TextView
+        android:id="@+id/noteContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="10dp"
+        android:background="@color/white"
+        android:text="Something" />
+
+</LinearLayout>

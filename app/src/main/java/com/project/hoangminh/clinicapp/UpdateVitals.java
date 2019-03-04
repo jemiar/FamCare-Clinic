@@ -1,6 +1,10 @@
 package com.project.hoangminh.clinicapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,17 +13,39 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
 
 import static android.graphics.Typeface.BOLD;
 
 public class UpdateVitals extends AppCompatActivity {
 
+    static final int SET_GOAL = 1;
+
     private RecyclerView vitalArea;
     private LinearLayoutManager layoutMan;
     private VitalAdapter vAdapter;
+    private FirebaseDatabase famCareDB;
+    private DatabaseReference dbRef;
+    private ChildEventListener vitalListener;
+    private TextView hrVal, btVal, bpVal, boVal, rrVal;
+    private TextView goal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +64,53 @@ public class UpdateVitals extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(UpdateVitals.this, PatientMain.class);
                 startActivity(intent);
+            }
+        });
+
+        //Get TextView for item summary
+        hrVal = findViewById(R.id.hr_val);
+        btVal = findViewById(R.id.bt_val);
+        bpVal = findViewById(R.id.bp_val);
+        boVal = findViewById(R.id.bo_val);
+        rrVal = findViewById(R.id.rr_val);
+
+        //Get TextView for patient goal
+        goal = findViewById(R.id.goal_txt);
+        SharedPreferences sh = this.getPreferences(Context.MODE_PRIVATE);
+        String goaltxt = sh.getString("GOALTXT", "No goal has been set. Please set patient's goal");
+        goal.setText(goaltxt);
+
+        Button submit_btn = findViewById(R.id.submitBtn);
+        submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> responses = (ArrayList<String>)vAdapter.getResponses();
+                if(responses.contains("NOVALUE")) {
+                    int first = responses.indexOf("NOVALUE");
+                    int last = responses.lastIndexOf("NOVALUE");
+                    ArrayList<String> empties = new ArrayList<>();
+                    for(int i = first; i <= last; i++) {
+                        if(responses.get(i).equals("NOVALUE"))
+                            empties.add(vAdapter.getDataSet().get(i).getLabel());
+                    }
+                    Intent intent = new Intent(UpdateVitals.this, Warning.class);
+                    intent.putStringArrayListExtra("values", empties);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(UpdateVitals.this, Review.class);
+                    intent.putStringArrayListExtra("values", (ArrayList<String>) vAdapter.getResponses());
+                    startActivity(intent);
+                }
+            }
+        });
+
+        //Set patient goal
+        Button editGoalBtn = findViewById(R.id.edit_goal_btn);
+        editGoalBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UpdateVitals.this, SetGoal.class);
+                startActivityForResult(intent, SET_GOAL);
             }
         });
 
@@ -76,11 +149,118 @@ public class UpdateVitals extends AppCompatActivity {
         vAdapter.addItem(appetite);
         vAdapter.notifyDataSetChanged();
 
+        //Set the day
+        String[] months = {"January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"};
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"));
+        String time = "" + months[cal.get(Calendar.MONTH)] + " " + cal.get(Calendar.DAY_OF_MONTH) + ", " + cal.get(Calendar.YEAR);
+        TextView day = findViewById(R.id.day_month);
+        day.setText(time);
+
+        //Update summary panel
+        famCareDB = FirebaseDatabase.getInstance();
+        dbRef = famCareDB.getReference().child("vitals");
+        vitalListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.i("AMTRAK", "Child added");
+                GenericTypeIndicator<List<ReviewItem>> t = new GenericTypeIndicator<List<ReviewItem>>(){};
+                List<ReviewItem> rItems = dataSnapshot.getValue(t);
+                String hr = rItems.get(0).getVal().toUpperCase();
+                String bt = rItems.get(3).getVal().toUpperCase();
+                String bo = rItems.get(4).getVal().toUpperCase();
+                String rr = rItems.get(1).getVal().toUpperCase();
+                setMarginStart(hr, hrVal, 0);
+                setMarginStart(bt, btVal, 1);
+                setMarginStart(bo, boVal, 2);
+                setMarginStart(rr, rrVal, 3);
+                hrVal.setText(hr);
+                btVal.setText(bt);
+                bpVal.setText(rItems.get(2).getVal().toUpperCase());
+                boVal.setText(bo);
+                rrVal.setText(rr);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        dbRef.addChildEventListener(vitalListener);
+
     }
 
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(UpdateVitals.this, PatientMain.class);
         startActivity(intent);
+    }
+
+    private void setMarginStart(String s, TextView t, int i) {
+        int[] lows = {45, 215, 555, 725};
+        int[] norms = {40, 210, 550, 720};
+        int[] highs = {41, 212, 550, 723};
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) t.getLayoutParams();
+        switch (s) {
+            case "LOW":
+                params.setMarginStart(lows[i]);
+                break;
+            case "NORMAL":
+                params.setMarginStart(norms[i]);
+                break;
+            case "HIGH":
+                params.setMarginStart(highs[i]);
+                break;
+            default:
+                break;
+        }
+        t.setLayoutParams(params);
+    }
+
+    //Get result from set goal activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == SET_GOAL) {
+            if(resultCode == RESULT_OK) {
+                goal.setText(data.getStringExtra("goal"));
+                SharedPreferences goalData = this.getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = goalData.edit();
+                editor.putString("GOALTXT", data.getStringExtra("goal"));
+                editor.apply();
+            }
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        goal.setText(savedInstanceState.getString("GOAL"));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("GOAL", goal.getText().toString());
+        Log.i("AMTRAK", "Saved");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }

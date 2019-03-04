@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="500dp"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:context=".SetGoal">
+
+    <TextView
+        android:id="@+id/goal_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="25sp"
+        android:background="@color/barColor"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="25dp"
+        android:text="@string/goal_title" />
+
+    <EditText
+        android:id="@+id/goalText"
+        android:layout_below="@id/goal_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginHorizontal="20dp"
+        android:textColor="@color/black"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/goalCancel"
+        android:layout_below="@id/goalText"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/roundedrec"
+        android:backgroundTint="@color/gray"
+        android:paddingHorizontal="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/white"
+        android:layout_alignParentStart="true"
+        android:text="Cancel" />
+
+    <Button
+        android:id="@+id/goalOk"
+        android:layout_below="@id/goalText"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:background="@drawable/roundedrec"
+        android:backgroundTint="@color/gray"
+        android:paddingHorizontal="20dp"
+        android:layout_marginVertical="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/white"
+        android:text="OK" />
+
+</RelativeLayout>
