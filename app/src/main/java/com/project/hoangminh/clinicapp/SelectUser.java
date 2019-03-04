@@ -28,7 +28,7 @@ public class SelectUser extends AppCompatActivity {
         span.setSpan(new RelativeSizeSpan(0.7f), 3, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         span.setSpan(new StyleSpan(BOLD), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         barTitle.setText(span);
-
+        //Test
         TextView appName = (TextView) findViewById(R.id.appName);
         appName.setText(span);
 
