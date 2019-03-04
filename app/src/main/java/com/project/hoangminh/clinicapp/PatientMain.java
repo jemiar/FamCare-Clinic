@@ -3,6 +3,7 @@ package com.project.hoangminh.clinicapp;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -44,8 +45,7 @@ public class PatientMain extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PatientMain.this, SelectUser.class);
-                startActivity(intent);
+                navigateBack();
             }
         });
 
@@ -112,7 +112,13 @@ public class PatientMain extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(PatientMain.this, SelectUser.class);
-        startActivity(intent);
+        navigateBack();
+    }
+
+    //Need to do this to keep the state of the parent activity
+    public void navigateBack() {
+        Intent intent = NavUtils.getParentActivityIntent(PatientMain.this);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        NavUtils.navigateUpTo(PatientMain.this, intent);
     }
 }

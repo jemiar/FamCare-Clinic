@@ -23,7 +23,9 @@
             android:theme="@style/FamCareDialog" />
         <activity
             android:name=".PatientMain"
-            android:theme="@style/FamCareTheme" />
+            android:theme="@style/FamCareTheme"
+            android:parentActivityName=".SelectUser">
+        </activity>
         <activity
             android:name=".UpdateVitals"
             android:theme="@style/FamCareTheme" />
