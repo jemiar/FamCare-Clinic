@@ -1,5 +1,6 @@
 package com.project.hoangminh.clinicapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import java.util.List;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     private List<String> dataset;
     private Context context;
+    static final int REMOVE = 2;
 
     public static class UserHolder extends RecyclerView.ViewHolder {
         public TextView name;
@@ -42,6 +44,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
         dataset.add(s);
     }
 
+    public void removeItem(int i) {
+        dataset.remove(i);
+    }
+
     @Override
     public int getItemCount() {
         return dataset.size();
@@ -55,8 +61,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserHolder userHolder, int i) {
-        String n = dataset.get(i);
+    public void onBindViewHolder(@NonNull UserHolder userHolder, final int i) {
+        final String n = dataset.get(i);
         userHolder.name.setText(n);
         userHolder.remove.setImageResource(R.drawable.remove);
         userHolder.name.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +74,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
                 Log.i("Here", "Right here");
                 context.startActivity(intent);
 //                Toast.makeText(context, "Hime", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Set click listener for remove 1 user
+        userHolder.remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ConfirmRemove.class);
+                intent.putExtra("position", i);
+                intent.putExtra("name", n);
+                ((Activity)context).startActivityForResult(intent, REMOVE);
             }
         });
     }

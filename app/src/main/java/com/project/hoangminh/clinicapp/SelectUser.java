@@ -1,5 +1,7 @@
 package com.project.hoangminh.clinicapp;
 
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 import static android.graphics.Typeface.BOLD;
 
 public class SelectUser extends AppCompatActivity {
+
+    private UserAdapter uAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,7 @@ public class SelectUser extends AppCompatActivity {
         RecyclerView teamList = findViewById(R.id.listOfClinicians);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         teamList.setLayoutManager(layoutManager);
-        UserAdapter uAdapter = new UserAdapter(this);
+        uAdapter = new UserAdapter(this);
         teamList.setAdapter(uAdapter);
 
         uAdapter.addItem("C. Williams");
@@ -39,5 +43,18 @@ public class SelectUser extends AppCompatActivity {
         uAdapter.addItem("C. Seigel");
 
         uAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == UserAdapter.REMOVE) {
+            if(resultCode == RESULT_OK) {
+                int pos = data.getIntExtra("position", -1);
+                if(pos != -1) {
+                    uAdapter.removeItem(pos);
+                    uAdapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 }

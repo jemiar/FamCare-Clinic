@@ -38,6 +38,9 @@
         <activity
             android:name=".SetGoal"
             android:theme="@style/FamCareDialog" />
+        <activity
+            android:name=".ConfirmRemove"
+            android:theme="@style/FamCareDialog"/>
     </application>
 
 </manifest>
