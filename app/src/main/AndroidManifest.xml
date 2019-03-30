@@ -11,6 +11,7 @@
         android:theme="@style/FamCareTheme">
         <activity
             android:name=".SelectUser"
+            android:screenOrientation="portrait"
             android:theme="@style/FamCareTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,28 +21,54 @@
         </activity>
         <activity
             android:name=".PassCode"
+            android:screenOrientation="portrait"
             android:theme="@style/FamCareDialog" />
         <activity
             android:name=".PatientMain"
-            android:theme="@style/FamCareTheme"
-            android:parentActivityName=".SelectUser">
-        </activity>
+            android:parentActivityName=".SelectUser"
+            android:screenOrientation="portrait"
+            android:theme="@style/FamCareTheme" />
         <activity
             android:name=".UpdateVitals"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".PatientMain"
             android:theme="@style/FamCareTheme" />
         <activity
             android:name=".Review"
+            android:screenOrientation="portrait"
             android:theme="@style/FamCareDialog" />
-        <activity android:name=".SendMessages" />
-        <activity android:name=".WriteNote" />
+        <activity
+            android:name=".SendMessages"
+            android:parentActivityName=".PatientMain"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WriteNote"
+            android:parentActivityName=".PatientMain"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Warning"
+            android:screenOrientation="portrait"
             android:theme="@style/FamCareDialog" />
         <activity
             android:name=".SetGoal"
+            android:screenOrientation="portrait"
             android:theme="@style/FamCareDialog" />
         <activity
             android:name=".ConfirmRemove"
+            android:screenOrientation="portrait"
+            android:theme="@style/FamCareDialog" />
+        <activity
+            android:name=".Settings"
+            android:parentActivityName=".PatientMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/FamCareTheme" />
+        <activity
+            android:name=".ConfirmSetting"
+            android:screenOrientation="portrait"
+            android:theme="@style/FamCareDialog" />
+        <activity
+            android:name=".EmptyWarning"
+            android:screenOrientation="portrait"
             android:theme="@style/FamCareDialog"/>
     </application>
 

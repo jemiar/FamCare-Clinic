@@ -8,22 +8,23 @@
 
     <include layout="@layout/top_bar" />
 
-    <TextView
-        android:id="@+id/sexNAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topBar"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
-        android:textStyle="bold"
-        android:text="Male, 72" />
+    <!--<TextView-->
+        <!--android:id="@+id/sexNAge"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/topBar"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:textStyle="bold"-->
+        <!--android:text="Male, 72" />-->
 
     <TextView
         android:id="@+id/patName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sexNAge"
+        android:layout_below="@id/topBar"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
         android:textStyle="bold"
         android:textSize="30sp"
         android:textColor="@color/barColor"
@@ -185,7 +186,7 @@
             android:layout_marginLeft="20dp"
             android:textSize="12sp"
             android:textColor="@color/white"
-            android:text="@string/lorem" />
+            android:text="New" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

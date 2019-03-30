@@ -27,7 +27,7 @@
         android:layout_marginTop="10dp"
         android:layout_below="@id/patientName"
         android:textAlignment="center"
-        android:text="Last update on 9/15/2018 09:30PM" />
+        android:text="Not updated yet" />
 
     <Button
         android:id="@+id/vitalButton"

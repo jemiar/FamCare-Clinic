@@ -1,6 +1,8 @@
 package com.project.hoangminh.clinicapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,9 +53,13 @@ public class Review extends AppCompatActivity {
 
         rAdapter.notifyDataSetChanged();
 
+        //Read patient code from shared preferences
+        SharedPreferences sp = this.getSharedPreferences(getString(R.string.PATIENT_CODE), Context.MODE_PRIVATE);
+        String p_code = sp.getString(getString(R.string.PATIENT_CODE), "default");
+
         famCareDB = FirebaseDatabase.getInstance();
-        dbRef = famCareDB.getReference().child("vitals");
-        timeRef = famCareDB.getReference().child("time");
+        dbRef = famCareDB.getReference().child(p_code).child("vitals");
+        timeRef = famCareDB.getReference().child(p_code).child("time");
 
         sendBtn = findViewById(R.id.send_btn);
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +78,11 @@ public class Review extends AppCompatActivity {
                         + "  " + cal.get(Calendar.HOUR_OF_DAY) + " : " + cal.get(Calendar.MINUTE);
                 timeRef.push().setValue(time);
 
+                //Write to Shared Preferences, to let the app know that:
+                //Data is not in the initial state anymore
+                //New time has been posted
+                writeToPref(R.string.PATIENT_TIME_KEY, 2, "", 1);
+
                 Intent intent = new Intent(Review.this, UpdateVitals.class);
                 startActivity(intent);
             }
@@ -84,5 +95,21 @@ public class Review extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void writeToPref(int key, int code, String s, int i) {
+        SharedPreferences sharedPref = this.getSharedPreferences(getString(key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        switch (code) {
+            case 1:
+                editor.putString(getString(key), s);
+                break;
+            case 2:
+                editor.putInt(getString(key), i);
+                break;
+            default:
+                break;
+        }
+        editor.apply();
     }
 }

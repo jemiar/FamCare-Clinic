@@ -19,7 +19,7 @@ public class ConfirmRemove extends AppCompatActivity {
         TextView question = findViewById(R.id.confirm_Q);
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
-        question.setText("Do you want to remove " + name + " from care team for this patient?");
+        question.setText("Please enter admin's passcode to remove " + name + " from care team for this patient");
         pos = intent.getIntExtra("position", -1);
 
         Button cancelBtn = (Button) findViewById(R.id.remove_cancel);

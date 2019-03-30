@@ -48,6 +48,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
         dataset.remove(i);
     }
 
+    public void setDataset(ArrayList<String> ds) {
+        dataset = ds;
+    }
+
+    public ArrayList<String> getDataset() {
+        return (ArrayList<String>) dataset;
+    }
+
     @Override
     public int getItemCount() {
         return dataset.size();
@@ -65,6 +73,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
         final String n = dataset.get(i);
         userHolder.name.setText(n);
         userHolder.remove.setImageResource(R.drawable.remove);
+        if (n.equals("Admin")) {
+            userHolder.remove.setVisibility(View.INVISIBLE);
+            userHolder.remove.setEnabled(false);
+        }
         userHolder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

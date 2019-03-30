@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:context=".EmptyWarning">
+
+    <TextView
+        android:id="@+id/empty_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:background="@color/barColor"
+        android:textColor="@color/white"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="20dp"
+        android:text="Initial Setting" />
+
+    <TextView
+        android:id="@+id/empty_text"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/empty_title"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:textSize="20sp"
+        android:text="@string/empty_request"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/empty_OK"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_below="@id/empty_text"
+        android:paddingHorizontal="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginVertical="30dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/roundedrec"
+        android:backgroundTint="@color/barColor"
+        android:textColor="@color/white"
+        android:text="OK" />
+
+</RelativeLayout>

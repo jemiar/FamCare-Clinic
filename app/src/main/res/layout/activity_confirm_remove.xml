@@ -30,6 +30,20 @@
         android:text="Do you want to remove?"
         android:textColor="@color/black" />
 
+    <EditText
+        android:id="@+id/remove_passcode"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="10dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/barColor"
+        android:layout_marginHorizontal="100dp"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:ems="10"
+        android:textColor="@color/black"
+        android:inputType="numberPassword" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

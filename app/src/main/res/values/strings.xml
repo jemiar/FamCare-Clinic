@@ -8,5 +8,11 @@
     <string name="vital_button">UPDATE VITALS</string>
     <string name="note_button">WRITE NOTE</string>
     <string name="msg_button">SEND MESSAGE</string>
-    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="PATIENT_NAME_KEY">com.project.hoangminh.clinicapp.PATIENT_NAME_KEY</string>
+    <string name="PATIENT_TIME_KEY">com.project.hoangminh.clinicapp.TIME_KEY</string>
+    <string name="PATIENT_CODE">com.project.hoangminh.clinicapp.PATIENT_CODE</string>
+    <string name="PATIENT_GOAL">com.project.hoangminh.clinicapp.PATIENT_GOAL</string>
+    <string name="CLINICIAN_LIST">com.project.hoangminh.clinicapp.CLINICIAN_LIST</string>
+    <string name="empty_request">Please set patient\'s name</string>
+    <string name="goal_initial">No goal has been set. Please set patient\'s goal</string>
 </resources>

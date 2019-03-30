@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,9 +15,11 @@ import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,7 +37,7 @@ import java.util.TimeZone;
 
 import static android.graphics.Typeface.BOLD;
 
-public class UpdateVitals extends AppCompatActivity {
+public class UpdateVitals extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     static final int SET_GOAL = 1;
 
@@ -67,6 +70,19 @@ public class UpdateVitals extends AppCompatActivity {
             }
         });
 
+        //Set hamburger button
+        ImageView options = findViewById(R.id.optionBtn_patientMain);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(UpdateVitals.this, v);
+                popup.setOnMenuItemClickListener(UpdateVitals.this);
+                popup.inflate(R.menu.hamburger_menu);
+                popup.show();
+            }
+        });
+
+
         //Get TextView for item summary
         hrVal = findViewById(R.id.hr_val);
         btVal = findViewById(R.id.bt_val);
@@ -76,9 +92,7 @@ public class UpdateVitals extends AppCompatActivity {
 
         //Get TextView for patient goal
         goal = findViewById(R.id.goal_txt);
-        SharedPreferences sh = this.getPreferences(Context.MODE_PRIVATE);
-        String goaltxt = sh.getString("GOALTXT", "No goal has been set. Please set patient's goal");
-        goal.setText(goaltxt);
+        goal.setText(readGoalFromPref());
 
         Button submit_btn = findViewById(R.id.submitBtn);
         submit_btn.setOnClickListener(new View.OnClickListener() {
@@ -157,9 +171,12 @@ public class UpdateVitals extends AppCompatActivity {
         TextView day = findViewById(R.id.day_month);
         day.setText(time);
 
+        //Read patient code from Shared Preferences, in order to read vitals from realtime DB
+        String p_code = readPatientCodeFromPref();
+
         //Update summary panel
         famCareDB = FirebaseDatabase.getInstance();
-        dbRef = famCareDB.getReference().child("vitals");
+        dbRef = famCareDB.getReference().child(p_code).child("vitals");
         vitalListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -182,24 +199,16 @@ public class UpdateVitals extends AppCompatActivity {
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
 
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         };
         dbRef.addChildEventListener(vitalListener);
 
@@ -207,8 +216,7 @@ public class UpdateVitals extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(UpdateVitals.this, PatientMain.class);
-        startActivity(intent);
+        navigateBack();
     }
 
     private void setMarginStart(String s, TextView t, int i) {
@@ -238,29 +246,83 @@ public class UpdateVitals extends AppCompatActivity {
         if(requestCode == SET_GOAL) {
             if(resultCode == RESULT_OK) {
                 goal.setText(data.getStringExtra("goal"));
-                SharedPreferences goalData = this.getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = goalData.edit();
-                editor.putString("GOALTXT", data.getStringExtra("goal"));
+                //Write goal to shared preferences
+                SharedPreferences sp = this.getSharedPreferences(getString(R.string.PATIENT_GOAL), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString(getString(R.string.PATIENT_GOAL), data.getStringExtra("goal"));
                 editor.apply();
             }
         }
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        goal.setText(savedInstanceState.getString("GOAL"));
-    }
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        goal.setText(savedInstanceState.getString("GOAL"));
+//    }
+//
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        outState.putString("GOAL", goal.getText().toString());
+//        Log.i("AMTRAK", "Saved");
+//        super.onSaveInstanceState(outState);
+//    }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("GOAL", goal.getText().toString());
-        Log.i("AMTRAK", "Saved");
-        super.onSaveInstanceState(outState);
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = this.getSharedPreferences(getString(R.string.PATIENT_NAME_KEY), Context.MODE_PRIVATE);
+        String defaultValue = "Patient not yet set";
+        String pName = sharedPref.getString(getString(R.string.PATIENT_NAME_KEY), defaultValue);
+        TextView p = findViewById(R.id.patName);
+        p.setText(pName);
+
+        //Read goal from shared preferences, then set text of the goal field
+        String g = readGoalFromPref();
+        goal.setText(g);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
     }
+
+    //Implement menu click function
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Intent i = new Intent(UpdateVitals.this, Settings.class);
+                startActivity(i);
+                return true;
+            case R.id.signout:
+                Intent intent_out = new Intent(UpdateVitals.this, SelectUser.class);
+                startActivity(intent_out);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private String readGoalFromPref() {
+        SharedPreferences sp = this.getSharedPreferences(getString(R.string.PATIENT_GOAL), Context.MODE_PRIVATE);
+        String g = sp.getString(getString(R.string.PATIENT_GOAL), getString(R.string.goal_initial));
+        return g;
+    }
+
+    //Function to read patient code from Shared Preferences
+    private String readPatientCodeFromPref() {
+        SharedPreferences sp = this.getSharedPreferences(getString(R.string.PATIENT_CODE), Context.MODE_PRIVATE);
+        String g = sp.getString(getString(R.string.PATIENT_CODE), "default");
+        return g;
+    }
+
+    //Function to navigate back
+    //Need to do this to keep the state of the parent activity
+    public void navigateBack() {
+        Intent intent = NavUtils.getParentActivityIntent(UpdateVitals.this);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        NavUtils.navigateUpTo(UpdateVitals.this, intent);
+    }
+
 }
